@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:background="#004B86"
+    tools:context=".HomeActivity">
+
+    <Button
+        android:id="@+id/open_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:background="@drawable/scan_qr_border"
+        android:text="@string/scanQRButton"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/open_leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leaderboardButton"
+        android:padding="20dp"
+        android:background="@drawable/round_border"
+        app:layout_constraintTop_toBottomOf="@id/open_scan"
+        app:layout_constraintBottom_toTopOf="@id/open_location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+    <Button
+        android:id="@+id/open_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border"
+        android:text="@string/locationsButton"
+        app:layout_constraintBottom_toBottomOf="@id/open_scan"
+        app:layout_constraintTop_toTopOf="@id/open_sign_out"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+
+    <Button
+        android:id="@+id/open_sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border_signout"
+        android:text="@string/signOutButton"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/open_location"
+        />
+
+    <TextView
+        android:id="@+id/newLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tips"
+        android:textColor="@color/FontColor"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

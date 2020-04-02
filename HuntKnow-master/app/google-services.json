@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "449099214805",
+    "firebase_url": "https://huntknow-f4783.firebaseio.com",
+    "project_id": "huntknow-f4783",
+    "storage_bucket": "huntknow-f4783.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449099214805:android:844347e91c634b2d2a575c",
+        "android_client_info": {
+          "package_name": "com.example.huntknow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449099214805-pdgve4enagkp9eom48ot2hel70r05c2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.huntknow",
+            "certificate_hash": "7fabd09ca544f0182caea13d1f10f32445501af9"
+          }
+        },
+        {
+          "client_id": "449099214805-g8tlekt10kf48rueic2r4681ucun6ohg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAAHDdLZsQO_C6WTG4nvRafa-wF5yWIXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449099214805-g8tlekt10kf48rueic2r4681ucun6ohg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

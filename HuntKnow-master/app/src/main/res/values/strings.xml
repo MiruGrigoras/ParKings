@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Hunt&amp;Know</string>
+    <string name="doneScan"> Done</string>
+    <string name="qrResultSpecifier">QR Result:</string>
+    <string name="scanQRButton">Scan QR</string>
+    <string name="leaderboardButton">Open Leaderboard</string>
+    <string name="locationsButton">Open Locations</string>
+    <string name="signOutButton">Sign Out</string>
+    <string name="leaderboardTitle">Leaderboard:</string>
+    <string name="locationBoard">Game Locations:</string>
+
+
+    <string name="qrResultSentence">QR Result:</string>
+    <string name="title_activity_quiz">QuizActivity</string>
+    <string name="question_text_1">Question 1</string>
+    <string name="question_text_2">Question 2</string>
+    <string name="question_text_3">Question 3</string>
+    <string name="question_text_4">Question 4</string>
+    <string name="question_text_5">Question 5</string>
+    <string name="question_text_6">Question 6</string>
+    <string name="question_text_7">Question 7</string>
+    <string name="question_text_8">Question 8</string>
+    <string name="question_text_9">Question 9</string>
+    <string name="question_text_10">Question 10</string>
+
+
+</resources>

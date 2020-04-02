@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#004B86"
+    tools:context=".WinActivity">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You finished the game!"
+        android:textColor="@color/FontColor"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/trophy"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+    <Button
+        android:id="@+id/goHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To Home"
+        android:visibility="visible"
+        android:textColor="@color/FontColor"
+        android:background="@drawable/round_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trophy"
+
+        />
+
+    <ImageView
+        android:id="@+id/trophy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/trophy"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="191dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        app:layout_constraintBottom_toTopOf="@id/goHome"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
