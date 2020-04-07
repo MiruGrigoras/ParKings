@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_name_size">50sp</dimen>
+    <dimen name="signin_button_margins">100dp</dimen>
+    <dimen name="margins_content_main_activity">150dp</dimen>
+</resources>

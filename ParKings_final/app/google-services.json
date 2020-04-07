@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "93575367987",
+    "firebase_url": "https://parkings-104.firebaseio.com",
+    "project_id": "parkings-104",
+    "storage_bucket": "parkings-104.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93575367987:android:cb64cebfb012d2948b4246",
+        "android_client_info": {
+          "package_name": "com.si.parkings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93575367987-uktve3veiatgbmbc21qi959r4blhrmgb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.si.parkings",
+            "certificate_hash": "cc7ca62cbd71ee5ed7435d7e764b9463642efbf4"
+          }
+        },
+        {
+          "client_id": "93575367987-tvq11vpjk6c7upji1gjtn87mhgf2p8sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9cOe25aUm00wsuNvgxZRxKwAbSBTo6_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93575367987-tvq11vpjk6c7upji1gjtn87mhgf2p8sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
