@@ -11,32 +11,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/logo"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_weight="50"
+            android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
-            android:text="@string/app_name"
-            android:textColor="#ffffff"
-            android:textAlignment="center"
-            android:textSize="@dimen/app_name_size"
             android:layout_marginTop="@dimen/margins_content_main_activity"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/signin_button">
-        </TextView>
+            android:layout_weight="50"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="@color/design_default_color_error"
+            android:textSize="70sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/signin_button"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/signin_button"
-            android:layout_width="match_parent"
+            android:layout_width="285dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/margins_content_main_activity"
-            android:layout_marginTop="@dimen/signin_button_margins"
             android:layout_marginLeft="@dimen/signin_button_margins"
+            android:layout_marginTop="@dimen/signin_button_margins"
             android:layout_marginRight="@dimen/signin_button_margins"
-            app:layout_constraintTop_toBottomOf="@id/logo"/>
+            android:layout_marginBottom="@dimen/margins_content_main_activity"
+            android:layout_weight="25"
+            app:layout_constraintTop_toBottomOf="@id/logo" />
 
     </LinearLayout>
 

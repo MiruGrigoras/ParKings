@@ -28,24 +28,24 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private int RequestCodeSignIn = 1;
     private GoogleSignInClient mGoogleSignInClient;
-    private GoogleSignInOptions mGoogleSignInOptions;
     private FirebaseAuth mAuth;
 
     private void configureGoogleSignIn() {
-        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
+        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions);
     }
 
     private void signIn(){
+
         SignInButton googleButton = (SignInButton) findViewById(R.id.signin_button);
-        googleButton.setOnClickListener(new View.OnClickListener(){
+        googleButton.setOnClickListener(new View.OnClickListener(){ // if the sign in button was clicked
             @Override
             public void onClick(View v) {
                 Intent singInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(singInIntent, RequestCodeSignIn);
+                startActivityForResult(singInIntent, RequestCodeSignIn); // calls the activity which authenticates the user
             }
         });
     }
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         signIn();
     }
 
-    private void updateUI(FirebaseUser account ){
+    private void updateUI(FirebaseUser user){
         startActivity(new Intent(MainActivity.this, MenuActivity.class));
     }
 
@@ -70,11 +70,10 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUI(user); // if the user was logged in successfully, the app will go to the main activity
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.content), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
                     }
                 });
@@ -84,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
         this.configureGoogleSignIn();
+        mAuth = FirebaseAuth.getInstance();
         this.setupUI();
     }
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == RequestCodeSignIn){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+                GoogleSignInAccount account = task.getResult(ApiException.class); // takes the account used for log in in app
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
@@ -106,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) { //verifies if there is a user logged in already
+            updateUI(user);
+            finish();
+        }
     }
 }
