@@ -7,43 +7,79 @@
     tools:context=".MenuActivity"
     android:background="@drawable/citytraffic">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/helloText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Hello, %s"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="175dp"
-            android:textColor="#FFFF"
+            android:text="Welcome, %s"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:textSize="55sp"
+            android:textSize="40sp"
             android:layout_marginTop="200dp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/signout_button"
-            app:layout_constraintHorizontal_bias="0.5" />
+            app:layout_constraintBottom_toTopOf="@id/search_parking_button"/>
+        <!--"text=#613637" -->
+
+        <Button
+            android:id="@+id/search_parking_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search for your parking spot"
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="@dimen/button_padding"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/signoutButton"
+            app:layout_constraintTop_toBottomOf="@id/helloText"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/enter_parking_button">
+        </Button>
+
+        <Button
+            android:id="@+id/enter_parking_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter the parking lot"
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="@dimen/button_padding"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/signoutButton"
+            app:layout_constraintTop_toBottomOf="@id/search_parking_button"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/signout_button">
+        </Button>
+
         <Button
             android:id="@+id/signout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign out"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="@dimen/button_padding"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/signoutButton"
-            app:layout_constraintTop_toTopOf="@id/helloText"
+            app:layout_constraintTop_toBottomOf="@id/enter_parking_button"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.5">
+            app:layout_constraintBottom_toBottomOf="parent">
         </Button>
 
-
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

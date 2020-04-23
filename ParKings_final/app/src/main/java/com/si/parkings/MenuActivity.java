@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
     private void setText() {
         TextView helloText = findViewById(R.id.helloText);
        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-       helloText.setText("Hello " + currentUser.getDisplayName());
+       helloText.setText("Welcome " + currentUser.getDisplayName());
     }
     private void setupUI(){
 
