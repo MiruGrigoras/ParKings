@@ -29,9 +29,30 @@ public class MenuActivity extends AppCompatActivity {
        helloText.setText("Welcome " + currentUser.getDisplayName());
     }
     private void setupUI(){
-
         setText();
+        searchParking();
+        enterParking();
         signOut();
+    }
+
+    private void enterParking() {
+        Button enterParkingButton = findViewById(R.id.enter_parking_button);
+        enterParkingButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
+            }
+        });
+    }
+
+    private void searchParking() {
+        Button searchParkingButton = findViewById(R.id.search_parking_button);
+        searchParkingButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, SearchParkingActivity.class));
+            }
+        });
     }
 
     @Override
