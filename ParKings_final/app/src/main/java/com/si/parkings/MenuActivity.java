@@ -50,7 +50,7 @@ public class MenuActivity extends AppCompatActivity {
         searchParkingButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, SearchParkingActivity.class));
+                startActivity(new Intent(MenuActivity.this, ParkingPlacesActivity.class));
             }
         });
     }
