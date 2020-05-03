@@ -6,20 +6,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
+import android.location.*;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.maps.model.*;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 public class ParkingPlacesActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
@@ -73,8 +73,18 @@ public class ParkingPlacesActivity extends FragmentActivity implements
                 for (DataSnapshot parkSnapshot: dataSnapshot.getChildren()) {
 
                     ParkingLots parkingLot = parkSnapshot.getValue(ParkingLots.class);
+
                     LatLng Park1 = new LatLng(Float.parseFloat(parkingLot.lat), Float.parseFloat(parkingLot.lng));
-                    mMap.addMarker(new MarkerOptions().position(Park1).title(parkingLot.title));
+                    int available_spots = 0;
+                    for(int i = 0; i < parkingLot.spots.size(); i++ ) {
+                        if (!parkingLot.spots.get(i).occupied)
+                            available_spots++;
+                    }
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(Park1)
+                            .title(parkingLot.title)
+                            .snippet("Available places: " + available_spots));
                 }
             }
 
@@ -94,6 +104,17 @@ public class ParkingPlacesActivity extends FragmentActivity implements
                 == PackageManager.PERMISSION_GRANTED) {
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
+
+                LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+                String bestProvider = String.valueOf(manager.getBestProvider(new Criteria(), true));
+                Location mLocation = manager.getLastKnownLocation(bestProvider);
+                if(mLocation != null) {
+                    LatLng my_loc = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(my_loc, 15));
+                }
+                else{
+                    startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
             }
         } else {
             // Permission to access the location is missing. Show rationale and request permission
