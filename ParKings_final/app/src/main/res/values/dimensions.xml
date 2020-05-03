@@ -2,6 +2,6 @@
 <resources>
     <dimen name="app_name_size">50sp</dimen>
     <dimen name="button_margins">100dp</dimen>
-    <dimen name="margins_content_main_activity">150dp</dimen>
+    <dimen name="margins_content_main_activity">100dp</dimen>
     <dimen name="button_padding">20dp</dimen>
 </resources>

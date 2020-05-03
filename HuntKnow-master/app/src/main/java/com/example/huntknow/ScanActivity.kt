@@ -35,7 +35,8 @@ class ScanActivity : AppCompatActivity() {
         val context=this
         surfaceScan = findViewById(R.id.surfaceQRScanner)
         scanResText = findViewById((R.id.qrResult))
-        qrDetector = BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build()
+        qrDetector = BarcodeDetector.Builder(this)
+            .setBarcodeFormats(Barcode.QR_CODE).build()
 
         if(!qrDetector.isOperational){
             this.finish()

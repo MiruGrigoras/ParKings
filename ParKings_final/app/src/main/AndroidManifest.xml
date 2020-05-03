@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.si.parkings">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.AUTOFOCUS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="true"/>
+
     <!--  android:icon="@mipmap/ic_launcher" -->
     <application
         android:allowBackup="true"
@@ -17,6 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".EnterParkingActivity"></activity>
+        <activity android:name=".SearchParkingActivity"></activity>
     </application>
 
 </manifest>

@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
     private void setText() {
         TextView helloText = findViewById(R.id.helloText);
        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-       helloText.setText("Welcome " + currentUser.getDisplayName());
+       helloText.setText("Welcome, " + currentUser.getDisplayName());
     }
     private void setupUI(){
         setText();
@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void enterParking() {
         Button enterParkingButton = findViewById(R.id.enter_parking_button);
+        enterParkingButton.setEnabled(true);
         enterParkingButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
