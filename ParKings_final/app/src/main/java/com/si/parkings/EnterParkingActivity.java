@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnterParkingActivity extends AppCompatActivity {
     private SurfaceView qrScanView;
@@ -36,7 +39,7 @@ public class EnterParkingActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private final int RequestCameraPermissionID = 1001;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getDisplayName());
+    private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -79,7 +82,6 @@ public class EnterParkingActivity extends AppCompatActivity {
                 .setRequestedPreviewSize(1920, 1080)
                 .build();
 
-        //this.sendLiftBarrierCommand();
 
         qrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -111,32 +113,43 @@ public class EnterParkingActivity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
-                if(qrCodes.valueAt(0).displayValue != null) {
-                    qrResult.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            final String readValue = qrCodes.valueAt(0).displayValue;
-                            qrResult.setText(readValue);
-                            if(readValue != null){
-                                databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        String text = dataSnapshot.getValue(String.class);
-                                        qrResult.setText(text);
-                                        User user = new User(currentUser.getUid());
-                                        user.setEnterTime(new Date(System.currentTimeMillis()));
-                                        user.setParkingLotID(getParkingLotIDFromQRResult(readValue));
-                                        databaseReferenceCurrentUser.setValue(user);
-                                    }
+                if(detections.getDetectedItems().size()>0){
+                    final Barcode qrCodes = detections.getDetectedItems().valueAt(0);
+                    if(qrCodes.displayValue != null) {
+                        qrResult.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    final String readValue = qrCodes.displayValue;
+                                    qrResult.setText(readValue);
+                                    if(readValue != null){
+                                        if(readValue.startsWith(getString(R.string.parkingEnterMessage))){
+                                            databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    Map<String, Object> userUpdate = new HashMap<>();
+                                                    userUpdate.put("enterTime", new Date(System.currentTimeMillis()));
+                                                    userUpdate.put("parkingLotID", getParkingLotIDFromQRResult(readValue));
+                                                    databaseReferenceCurrentUser.updateChildren(userUpdate);
+                                                    sendLiftBarrierCommand();
+                                                }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                }
+                                            });
+                                        }
+                                        else{
+                                            Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
                                     }
-                                });
+                                }catch (IndexOutOfBoundsException e){
+                                }
+
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
@@ -160,7 +173,6 @@ public class EnterParkingActivity extends AppCompatActivity {
 
 
     private String getParkingLotIDFromQRResult(final String readValue) {
-
         DatabaseReference databaseReferenceParkingLots = FirebaseDatabase.getInstance().getReference().child("parking_lots");
         ParkingIDValueEventListener vel = new ParkingIDValueEventListener(readValue);
         databaseReferenceParkingLots.addValueEventListener(vel);

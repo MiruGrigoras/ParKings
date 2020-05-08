@@ -8,12 +8,11 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true"/>
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
-        android:required="true"/>
+        android:required="true" />
 
-    <!--  android:icon="@mipmap/ic_launcher" -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".InTheParkingActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity"></activity>
-        <activity android:name=".EnterParkingActivity"></activity>
-        <activity android:name=".SearchParkingActivity"></activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".EnterParkingActivity" />
+        <activity android:name=".SearchParkingActivity" />
     </application>
 
 </manifest>

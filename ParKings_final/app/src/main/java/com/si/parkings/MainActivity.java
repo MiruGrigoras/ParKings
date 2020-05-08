@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
                             User currentUser = new User(user.getUid());
                             currentUser.setCash((float) 0);
-                            reference.child(user.getDisplayName()).setValue(currentUser);
+                            reference.child(user.getUid()).setValue(currentUser);
 
                             updateUI(user); // if the user was logged in successfully, the app will go to the menu activity
                         } else {
