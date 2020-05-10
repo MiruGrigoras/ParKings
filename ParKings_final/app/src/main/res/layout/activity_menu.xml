@@ -4,82 +4,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity"
-    android:background="@drawable/citytraffic">
+    android:background="@drawable/citytraffic"
+    tools:context=".MenuActivity">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/helloText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/helloText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="Welcome, %s"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/search_parking_button"/>
-        <!--"text=#613637" -->
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:baselineAligned="false"
+        android:ems="10"
+        android:gravity="center"
+        android:text="Welcome"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/amountText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <Button
-            android:id="@+id/search_parking_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search for your parking spot"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/signoutButton"
-            app:layout_constraintTop_toBottomOf="@id/helloText"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/enter_parking_button">
-        </Button>
+    <TextView
+        android:id="@+id/amountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:text="Your amount:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/helloText"
+        app:layout_constraintBottom_toTopOf="@id/parkText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <Button
-            android:id="@+id/enter_parking_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enter the parking lot"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/signoutButton"
-            app:layout_constraintTop_toBottomOf="@id/search_parking_button"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/signout_button">
-        </Button>
+    <TextView
+        android:id="@+id/parkText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:text="Park place"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/amountText"
+        app:layout_constraintBottom_toTopOf="@id/enter_parking_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-        <Button
-            android:id="@+id/signout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign out"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/signoutButton"
-            app:layout_constraintTop_toBottomOf="@id/enter_parking_button"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        </Button>
+    <Button
+        android:id="@+id/enter_parking_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/signoutButton"
+        android:padding="10dp"
+        android:text="Enter"
+        app:layout_constraintTop_toBottomOf="@id/parkText"
+        app:layout_constraintBottom_toTopOf="@id/enter_amount_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/enter_amount_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/signoutButton"
+        android:padding="10dp"
+        android:text="Add amount"
+        app:layout_constraintTop_toBottomOf="@id/enter_parking_button"
+        app:layout_constraintBottom_toTopOf="@id/search_parking_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
+    <Button
+        android:id="@+id/search_parking_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/signoutButton"
+        android:padding="10dp"
+        android:text="See parking lots"
+        app:layout_constraintTop_toBottomOf="@id/enter_amount_button"
+        app:layout_constraintBottom_toTopOf="@id/signout_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/signout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Sign out"
+        app:layout_constraintTop_toBottomOf="@id/search_parking_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
