@@ -23,6 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -55,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user){
-        startActivity(new Intent(MainActivity.this, MenuActivity.class));
+        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+        startActivity(intent);
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -70,7 +73,13 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user); // if the user was logged in successfully, the app will go to the main activity
+
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+                            User currentUser = new User(user.getUid());
+                            currentUser.setCash((float) 0);
+                            reference.child(user.getUid()).setValue(currentUser);
+
+                            updateUI(user); // if the user was logged in successfully, the app will go to the menu activity
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.content), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();

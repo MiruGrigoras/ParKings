@@ -1,7 +1,6 @@
 package com.si.parkings;
 
 import java.util.ArrayList;
-
 public class ParkingLots {
     public String lat;
     public String lng;
