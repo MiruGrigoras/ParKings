@@ -131,6 +131,7 @@ public abstract class QRScan extends AppCompatActivity{
             @Override
             public void release() { }
 
+            public int count = 0;
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 if(detections.getDetectedItems().size()>0){
@@ -142,8 +143,9 @@ public abstract class QRScan extends AppCompatActivity{
                                 try{
                                     final String readValue = qrCodes.displayValue;
                                     qrResult.setText(readValue);
-                                    if(readValue != null){
+                                    if(readValue != null && count == 0){
                                         process(readValue);
+                                        count++;
                                     }
                                 }catch (IndexOutOfBoundsException e){
                                 }

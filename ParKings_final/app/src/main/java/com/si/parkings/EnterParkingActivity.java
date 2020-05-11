@@ -76,7 +76,7 @@ public class EnterParkingActivity extends QRScan {
         });
 
 
-        Intent intent = new Intent(EnterParkingActivity.this, InTheParkingActivity.class);
+        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
         intent.putExtra("qrResult", getQrResult().getText().toString());
         startActivity(intent);
         this.finish();

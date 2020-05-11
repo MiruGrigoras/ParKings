@@ -84,7 +84,7 @@ public class ParkingPlacesActivity extends FragmentActivity implements
                     mMap.addMarker(new MarkerOptions()
                             .position(Park1)
                             .title(parkingLot.title)
-                            .snippet("Available places: " + available_spots));
+                            .snippet("Places: " + available_spots + " / Fee: " + parkingLot.price + " RON/h"));
                 }
             }
 
