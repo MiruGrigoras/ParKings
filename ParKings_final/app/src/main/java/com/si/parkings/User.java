@@ -11,6 +11,8 @@ public class User {
     private Float amountToPay;
     private Float cash;
 
+    public User(){}
+
     public User(String uid){
         this.uid = uid;
     }

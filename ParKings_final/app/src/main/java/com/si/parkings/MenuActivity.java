@@ -1,53 +1,94 @@
 package com.si.parkings;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
-    public void signOut(){
-        Button signoutButton = findViewById(R.id.signout_button);
-        signoutButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
+    DialogInterface.OnClickListener dialogClickListener = (dialog, variant) -> {
+        switch (variant){
+            case DialogInterface.BUTTON_POSITIVE:
+                //Yes button clicked
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MenuActivity.this, MainActivity.class));
-            }
+                break;
+
+            case DialogInterface.BUTTON_NEGATIVE:
+                //No button clicked
+                break;
+        }
+    };
+
+    public void signOut(){
+        Button signoutButton = findViewById(R.id.signout_button);
+        signoutButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("If you sign out, you will lose al your data. Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
         });
     }
     @SuppressLint("SetTextI18n")
     private void setText() {
         TextView helloText = findViewById(R.id.helloText);
         TextView amountText = findViewById(R.id.amountText);
+        TextView parkText = findViewById(R.id.parkText);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        // get current user
-        helloText.setText("Welcome " + currentUser.getDisplayName());
-        // set current amount
-        // amountText.setText("Your amount: " + );
+        helloText.setText("Welcome, " + currentUser.getDisplayName());
+        DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+        databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                assert user != null;
+                amountText.setText("Your amount: " +  user.getCash());
+                String parkingLot = user.getParkingLotID();
+                String parkingSpot = user.getParkingSpotID();
+                if (parkingLot != null) {
+                    parkingLot = (String)Array.get(parkingLot.split("-", 3),2);
+                    if (parkingSpot != null)
+                        parkingSpot = (String)Array.get(parkingSpot.split("-", 3),2);
+                    else
+                        parkingSpot = "";
+                    parkText.setText("You parked in: " + parkingLot + "," + parkingSpot);
+                }
+                else
+                    parkText.setText("You haven't parked yet.");
 
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void addAmount(){
         Button addAmountButton = findViewById(R.id.enter_amount_button);
-        addAmountButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, AmountActivity.class));
-            }
-        });
-       currentUser = FirebaseAuth.getInstance().getCurrentUser();
-       helloText.setText("Welcome, " + currentUser.getDisplayName());
+        addAmountButton.setOnClickListener(
+                v -> startActivity(new Intent(MenuActivity.this, AmountActivity.class)));
     }
     private void setupUI(){
         setText();
@@ -60,22 +101,14 @@ public class MenuActivity extends AppCompatActivity {
     private void enterParking() {
         Button enterParkingButton = findViewById(R.id.enter_parking_button);
         enterParkingButton.setEnabled(true);
-        enterParkingButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
-            }
-        });
+        enterParkingButton.setOnClickListener(
+                v -> startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class)));
     }
 
     private void searchParking() {
         Button searchParkingButton = findViewById(R.id.search_parking_button);
-        searchParkingButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, ParkingPlacesActivity.class));
-            }
-        });
+        searchParkingButton.setOnClickListener(
+                v -> startActivity(new Intent(MenuActivity.this, ParkingPlacesActivity.class)));
     }
 
     @Override
