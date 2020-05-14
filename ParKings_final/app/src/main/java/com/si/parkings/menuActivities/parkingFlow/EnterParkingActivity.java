@@ -1,4 +1,4 @@
-package com.si.parkings;
+package com.si.parkings.menuActivities.parkingFlow;
 
 import android.content.Intent;
 import android.widget.Toast;
@@ -63,7 +63,7 @@ public class EnterParkingActivity extends QRScan {
                 for (DataSnapshot parkingLotSnapshot: dataSnapshot.getChildren()) {
                     ParkingLots parkingLot = parkingLotSnapshot.getValue(ParkingLots.class);
                     if (parkingLot.qr_code.equals(readValue)) {
-                        parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift", true);
+                        parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_enter", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
                         return;
                     }

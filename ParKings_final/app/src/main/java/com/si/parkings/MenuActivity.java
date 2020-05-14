@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,10 +24,6 @@ import com.si.parkings.menuActivities.ParkingPlacesActivity;
 import com.si.parkings.menuActivities.parkingFlow.EnterParkingActivity;
 
 import java.lang.reflect.Array;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
