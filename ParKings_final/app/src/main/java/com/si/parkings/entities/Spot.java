@@ -1,4 +1,4 @@
-package com.si.parkings;
+package com.si.parkings.entities;
 
 public class Spot {
     public boolean occupied;

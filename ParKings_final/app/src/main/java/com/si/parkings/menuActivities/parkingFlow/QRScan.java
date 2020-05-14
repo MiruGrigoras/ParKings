@@ -1,4 +1,4 @@
-package com.si.parkings.qrScan;
+package com.si.parkings.menuActivities.parkingFlow;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +16,9 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.si.parkings.EnterParkingActivity;
 import com.si.parkings.R;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class QRScan extends AppCompatActivity{
     private TextView qrResult;

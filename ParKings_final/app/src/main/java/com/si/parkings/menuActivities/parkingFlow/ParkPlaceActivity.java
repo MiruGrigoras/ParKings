@@ -1,4 +1,4 @@
-package com.si.parkings;
+package com.si.parkings.menuActivities.parkingFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.si.parkings.R;
 
 public class ParkPlaceActivity extends AppCompatActivity {
 

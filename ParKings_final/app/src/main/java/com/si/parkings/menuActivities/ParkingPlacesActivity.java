@@ -1,4 +1,4 @@
-package com.si.parkings;
+package com.si.parkings.menuActivities;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -16,10 +16,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.firebase.database.*;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.stream.Collectors;
+import com.si.parkings.entities.ParkingLots;
+import com.si.parkings.R;
 
 public class ParkingPlacesActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,

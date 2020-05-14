@@ -1,4 +1,4 @@
-package com.si.parkings;
+package com.si.parkings.entities;
 
 import java.util.ArrayList;
 public class ParkingLots {

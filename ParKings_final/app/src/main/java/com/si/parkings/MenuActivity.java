@@ -19,6 +19,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.si.parkings.entities.User;
+import com.si.parkings.menuActivities.AmountActivity;
+import com.si.parkings.menuActivities.ParkingPlacesActivity;
+import com.si.parkings.menuActivities.parkingFlow.EnterParkingActivity;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
@@ -47,7 +51,7 @@ public class MenuActivity extends AppCompatActivity {
         Button signoutButton = findViewById(R.id.signout_button);
         signoutButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("If you sign out, you will lose al your data. Are you sure?").setPositiveButton("Yes", dialogClickListener)
+            builder.setMessage("If you sign out, you will lose all your data. Are you sure?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
         });
     }
