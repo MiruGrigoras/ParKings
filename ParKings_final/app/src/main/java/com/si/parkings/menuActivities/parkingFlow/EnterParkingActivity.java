@@ -29,6 +29,11 @@ public class EnterParkingActivity extends QRScan {
     }
 
     @Override
+    public void setContentView() {
+        setContentView(R.layout.activity_enter_parking);
+    }
+
+    @Override
     protected void process(final String readValue) {
         if(readValue.startsWith(getString(R.string.parkingEnterMessage))){
             databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,7 +87,7 @@ public class EnterParkingActivity extends QRScan {
         });
 
 
-        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
+        Intent intent = new Intent(EnterParkingActivity.this, SeeAssignedParkPlaceActivity.class);
         intent.putExtra("qrResult", getQrResult().getText().toString());
         startActivity(intent);
         this.finish();

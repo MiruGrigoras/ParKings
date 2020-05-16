@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.si.parkings.entities.User;
 import com.si.parkings.entities.UserDate;
 import com.si.parkings.menuActivities.AmountActivity;
-import com.si.parkings.menuActivities.ParkingPlacesActivity;
+import com.si.parkings.menuActivities.SeeParkingLotsActivity;
 import com.si.parkings.menuActivities.parkingFlow.EnterParkingActivity;
 import com.si.parkings.menuActivities.parkingFlow.ExitParkingActivity;
 
@@ -120,7 +120,7 @@ public class MenuActivity extends AppCompatActivity {
                     enterParkingButton.setOnClickListener(
                             v -> {
                                 startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
-                                currentActivity.finish();
+                                currentActivity.finish(); //should be deleted??
                             });
 
                 }
@@ -142,6 +142,7 @@ public class MenuActivity extends AppCompatActivity {
                             intent.putExtra("userCash", user.getCash());
                             intent.putExtra("userAmountToPay", user.getAmountToPay());
                             startActivity(intent);
+                            currentActivity.finish();  //should be deleted??
                         }
                         else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay", Toast.LENGTH_SHORT);
@@ -160,7 +161,7 @@ public class MenuActivity extends AppCompatActivity {
     private void searchParking() {
         Button searchParkingButton = findViewById(R.id.search_parking_button);
         searchParkingButton.setOnClickListener(
-                v -> startActivity(new Intent(MenuActivity.this, ParkingPlacesActivity.class)));
+                v -> startActivity(new Intent(MenuActivity.this, SeeParkingLotsActivity.class)));
     }
 
     @Override

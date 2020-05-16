@@ -19,7 +19,7 @@ import com.google.firebase.database.*;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.R;
 
-public class ParkingPlacesActivity extends FragmentActivity implements
+public class SeeParkingLotsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,
@@ -63,7 +63,7 @@ public class ParkingPlacesActivity extends FragmentActivity implements
 
     private void addParkingLots(GoogleMap googleMap) {
         DatabaseReference parkingLotsReference = FirebaseDatabase.getInstance().getReference().child("parking_lots");
-        final ParkingPlacesActivity context = this;
+        final SeeParkingLotsActivity context = this;
         mMap = googleMap;
         parkingLotsReference.addValueEventListener(new ValueEventListener() {
             @Override

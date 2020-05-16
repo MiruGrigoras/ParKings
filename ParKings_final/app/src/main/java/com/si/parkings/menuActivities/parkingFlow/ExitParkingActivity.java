@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.si.parkings.MenuActivity;
 import com.si.parkings.R;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.entities.User;
@@ -31,33 +32,18 @@ public class ExitParkingActivity extends QRScan {
         setCurrentActivity(this);
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setContentView() {
         setContentView(R.layout.activity_exit_parking);
     }
 
     @Override
     protected void process(final String readValue) {
+        System.out.println("*********** Am ajuns in process ***************");
         if(readValue.startsWith(getString(R.string.parkingEnterMessage))){
-            databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, Object> userUpdate = new HashMap<>();
-                    userUpdate.put("exitTime/year", LocalDateTime.now().getYear());
-                    userUpdate.put("exitTime/day_of_year", LocalDateTime.now().getDayOfYear());
-                    userUpdate.put("exitTime/hour", LocalDateTime.now().getHour());
-                    userUpdate.put("exitTime/minute", LocalDateTime.now().getMinute());
-                    userUpdate.put("exitTime/second", LocalDateTime.now().getSecond());
-                    userUpdate.put("parkingLotID", readValue);
-                    databaseReferenceCurrentUser.updateChildren(userUpdate);
-                    sendLiftBarrierCommand(readValue);
-                    extractSumToPayAndResetParkingStatus();
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
+            sendLiftBarrierCommand(readValue);
+            extractSumToPayAndResetParkingStatus();
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
@@ -114,7 +100,7 @@ public class ExitParkingActivity extends QRScan {
             }
         });
 
-        Intent intent = new Intent(ExitParkingActivity.this, ParkPlaceActivity.class);
+        Intent intent = new Intent(ExitParkingActivity.this, MenuActivity.class);
         intent.putExtra("qrResult", getQrResult().getText().toString());
         startActivity(intent);
         this.finish();

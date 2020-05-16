@@ -10,7 +10,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.si.parkings.R;
 
-public class ParkPlaceActivity extends AppCompatActivity {
+public class SeeAssignedParkPlaceActivity extends AppCompatActivity {
 
     private void getPicture()
     {
