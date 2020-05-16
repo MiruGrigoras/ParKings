@@ -1,7 +1,6 @@
 package com.si.parkings.entities;
 
 public class User {
-    private String uid;
     private String parkingSpotID;
     private String parkingLotID;
     private UserDate enterTime;
@@ -12,21 +11,13 @@ public class User {
 
     public User (){}
 
-    public User(String uid){
-        this.uid = uid;
-    }
-
     public Float calculateOwedSum(UserDate enterDate, UserDate exitDate, int parkingLotPrice) {
-        float hoursNumber = (float) ((enterDate.getSecond() - exitDate.getSecond()) / 3600.0);
-        hoursNumber += (enterDate.getMinute() - exitDate.getMinute()) / 60.0;
-        hoursNumber += enterDate.getHour() - exitDate.getHour();
-        hoursNumber += (enterDate.getDayOfYear() - exitDate.getDayOfYear()) * 24;
-        hoursNumber += (enterDate.getYear() - exitDate.getYear()) * 365;
+        float hoursNumber = (float) ((exitDate.getSecond() - enterDate.getSecond()) / 3600.0);
+        hoursNumber += (exitDate.getMinute() - enterDate.getMinute()) / 60.0;
+        hoursNumber += exitDate.getHour() - enterDate.getHour();
+        hoursNumber += (exitDate.getDayOfYear() - enterDate.getDayOfYear()) * 24;
+        hoursNumber += (exitDate.getYear() - enterDate.getYear()) * 365;
         return hoursNumber * parkingLotPrice;
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     public String getParkingSpotID() {

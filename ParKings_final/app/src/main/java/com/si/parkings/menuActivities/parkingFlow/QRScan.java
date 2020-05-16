@@ -36,10 +36,6 @@ public abstract class QRScan extends AppCompatActivity{
         this.currentActivity = currentActivity;
     }
 
-    public TextView getQrResult() {
-        return qrResult;
-    }
-
     public void setQrResult(TextView qrResult) {
         this.qrResult = qrResult;
     }

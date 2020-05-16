@@ -136,7 +136,8 @@ public class MenuActivity extends AppCompatActivity {
                         currentDate.setHour(LocalDateTime.now().getHour());
                         currentDate.setMinute(LocalDateTime.now().getMinute());
                         currentDate.setSecond(LocalDateTime.now().getSecond());
-                        user.setAmountToPay(user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice()));
+                        Float amount = user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice());
+                        user.setAmountToPay(amount);
                         if(user.getAmountToPay() < user.getCash()) {
                             Intent intent = new Intent(MenuActivity.this, ExitParkingActivity.class);
                             intent.putExtra("userCash", user.getCash());
@@ -145,7 +146,7 @@ public class MenuActivity extends AppCompatActivity {
                             currentActivity.finish();  //should be deleted??
                         }
                         else {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay!", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     });
