@@ -17,7 +17,7 @@ import com.si.parkings.MenuActivity;
 import com.si.parkings.R;
 import com.si.parkings.menuActivities.AmountActivity;
 
-public class ParkPlaceActivity extends AppCompatActivity {
+public class SeeAssignedParkPlaceActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void getPicture()

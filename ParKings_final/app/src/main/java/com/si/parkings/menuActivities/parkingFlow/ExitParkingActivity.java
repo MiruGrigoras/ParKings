@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.si.parkings.MenuActivity;
 import com.si.parkings.R;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.entities.User;
@@ -25,39 +26,22 @@ import java.util.Map;
 public class ExitParkingActivity extends QRScan {
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
-    private int currentUserParkingLotPrice;
+
 
     public ExitParkingActivity(){
         setCurrentActivity(this);
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setContentView() {
         setContentView(R.layout.activity_exit_parking);
     }
 
     @Override
     protected void process(final String readValue) {
-        if(readValue.startsWith(getString(R.string.parkingEnterMessage))){
-            databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, Object> userUpdate = new HashMap<>();
-                    userUpdate.put("exitTime/year", LocalDateTime.now().getYear());
-                    userUpdate.put("exitTime/day_of_year", LocalDateTime.now().getDayOfYear());
-                    userUpdate.put("exitTime/hour", LocalDateTime.now().getHour());
-                    userUpdate.put("exitTime/minute", LocalDateTime.now().getMinute());
-                    userUpdate.put("exitTime/second", LocalDateTime.now().getSecond());
-                    userUpdate.put("parkingLotID", readValue);
-                    databaseReferenceCurrentUser.updateChildren(userUpdate);
-                    sendLiftBarrierCommand(readValue);
-                    extractSumToPayAndResetParkingStatus();
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
+        if(readValue.startsWith(getString(R.string.parkingExitMessage))){
+            extractSumToPayAndResetParkingStatus(readValue);
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
@@ -65,24 +49,31 @@ public class ExitParkingActivity extends QRScan {
         }
     }
 
-    private void extractSumToPayAndResetParkingStatus() {
+    private void extractSumToPayAndResetParkingStatus(String readValue) {
         databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Intent intent = getIntent();
+                Float userCash = intent.getFloatExtra("userCash", 0);
+                Float userAmountToPay = intent.getFloatExtra("userAmountToPay", 0);
+
+                User user = new User();
+                user.setAmountToPay(userAmountToPay);
+                user.setCash(userCash - userAmountToPay);
+
                 Map<String, Object> userUpdate = new HashMap<>();
-                User user = dataSnapshot.getValue(User.class);
-                UserDate enterDate = user.getEnterTime();
-                UserDate exitDate = user.getExitTime();
-                Float amountToPay = user.calculateOwedSum(enterDate, exitDate, currentUserParkingLotPrice);
-                user.setAmountToPay(amountToPay);
-                user.setCash(user.getCash() - amountToPay);
-                userUpdate.put(dataSnapshot.getKey()+"/cash", user.getCash());
-                userUpdate.put(dataSnapshot.getKey()+"/amountToPay", user.getAmountToPay());
-                userUpdate.put(dataSnapshot.getKey()+"/enterTime", null);
-                userUpdate.put(dataSnapshot.getKey()+"/exitTime", null);
-                userUpdate.put(dataSnapshot.getKey()+"/parkingLotID", null);
-                userUpdate.put(dataSnapshot.getKey()+"/parkingLotPrice", null);
-                userUpdate.put(dataSnapshot.getKey()+"/parkingSpotID", null);
+                userUpdate.put("/cash", user.getCash());
+                userUpdate.put("/amountToPay", userAmountToPay);
+                userUpdate.put("/enterTime", null);
+                userUpdate.put("/parkingLotID", null);
+                userUpdate.put("/parkingLotPrice", null);
+                userUpdate.put("/parkingSpotID", null);
+
+                databaseReferenceCurrentUser.updateChildren(userUpdate);
+
+                sendLiftBarrierCommand(readValue);
+                return;
+
             }
 
             @Override
@@ -102,7 +93,6 @@ public class ExitParkingActivity extends QRScan {
                     if (parkingLot.qr_code_exit.equals(readValue)) {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_exit", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
-                        currentUserParkingLotPrice = Integer.parseInt(parkingLot.price);
                         return;
                     }
                 }
@@ -114,9 +104,7 @@ public class ExitParkingActivity extends QRScan {
             }
         });
 
-        Intent intent = new Intent(ExitParkingActivity.this, ParkPlaceActivity.class);
-        intent.putExtra("qrResult", getQrResult().getText().toString());
-        startActivity(intent);
+        startActivity(new Intent(ExitParkingActivity.this, MenuActivity.class));
         this.finish();
     }
 }
