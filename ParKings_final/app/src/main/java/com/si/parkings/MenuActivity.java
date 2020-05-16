@@ -119,18 +119,18 @@ public class MenuActivity extends AppCompatActivity {
                             v -> startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class)));
                 }
                 else{
-                    UserDate enterDate = user.getEnterTime();
-                    UserDate currentDate = new UserDate();
-                    currentDate.setDayOfYear(LocalDateTime.now().getDayOfYear());
-                    currentDate.setYear(LocalDateTime.now().getYear());
-                    currentDate.setHour(LocalDateTime.now().getHour());
-                    currentDate.setMinute(LocalDateTime.now().getMinute());
-                    currentDate.setSecond(LocalDateTime.now().getSecond());
-                    user.setAmountToPay(user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice()));
                     exitParkingButton.setEnabled(true);
                     enterParkingButton.setVisibility(View.GONE);
                     exitParkingButton.setVisibility(View.VISIBLE);
                     exitParkingButton.setOnClickListener(v -> {
+                        UserDate enterDate = user.getEnterTime();
+                        UserDate currentDate = new UserDate();
+                        currentDate.setDayOfYear(LocalDateTime.now().getDayOfYear());
+                        currentDate.setYear(LocalDateTime.now().getYear());
+                        currentDate.setHour(LocalDateTime.now().getHour());
+                        currentDate.setMinute(LocalDateTime.now().getMinute());
+                        currentDate.setSecond(LocalDateTime.now().getSecond());
+                        user.setAmountToPay(user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice()));
                         if(user.getAmountToPay() < user.getCash())
                             startActivity(new Intent(MenuActivity.this, ExitParkingActivity.class));
                         else {
