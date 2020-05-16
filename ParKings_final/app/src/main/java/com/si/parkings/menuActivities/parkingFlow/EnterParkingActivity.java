@@ -1,5 +1,6 @@
 package com.si.parkings.menuActivities.parkingFlow;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -93,13 +94,13 @@ public class EnterParkingActivity extends QRScan {
                         userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
                         databaseReferenceCurrentUser.updateChildren(userUpdate);
 
-                        startActivity(new Intent(EnterParkingActivity.this, SeeAssignedParkPlaceActivity.class));
-                        currentActivity.finish();
 
-                        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
+
+                        Intent intent = new Intent(EnterParkingActivity.this, SeeAssignedParkPlaceActivity.class);
                         intent.putExtra("image_url", spot_link);
                         intent.putExtra("spot_name", parkingLot.spots.get(index).spot_id);
                         startActivity(intent);
+                        currentActivity.finish();
                         return;
                     }
                 }
