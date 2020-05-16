@@ -78,6 +78,7 @@ public class EnterParkingActivity extends QRScan {
                         user.setParkingLotPrice(Integer.parseInt(parkingLot.price));
                         Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
                         intent.putExtra("image_url", spot_link);
+                        intent.putExtra("spot_name", parkingLot.spots.get(index).spot_id);
                         startActivity(intent);
                         return;
                     }
