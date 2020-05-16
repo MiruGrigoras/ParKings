@@ -172,4 +172,16 @@ public class MenuActivity extends AppCompatActivity {
         currentActivity = this;
         this.setupUI();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Boolean refresh = intent.getBooleanExtra("refresh",false);
+        if (refresh) {
+            intent.removeExtra("refresh");
+            this.finish();
+            startActivity(intent);
+        }
+    }
 }

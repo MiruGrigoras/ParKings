@@ -53,7 +53,9 @@ public class AmountActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-            startActivity(new Intent(AmountActivity.this, MenuActivity.class));
+            Intent intent = new Intent(AmountActivity.this, MenuActivity.class);
+            intent.putExtra("refresh", true);
+            startActivity(intent);
         });
     }
 }
