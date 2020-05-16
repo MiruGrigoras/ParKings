@@ -1,9 +1,12 @@
 package com.si.parkings.menuActivities.parkingFlow;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,9 +26,22 @@ import java.util.Map;
 public class EnterParkingActivity extends QRScan {
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+    Activity currentActivity;
+    private int currentUserParkingLotPrice;
 
     public EnterParkingActivity(){
         setCurrentActivity(this);
+    }
+
+    @Override
+    public void setContentView() {
+        setContentView(R.layout.activity_enter_parking);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        currentActivity = this;
     }
 
     @Override
@@ -36,15 +52,6 @@ public class EnterParkingActivity extends QRScan {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
                     sendLiftBarrierCommand(readValue, user);
-                    Map<String, Object> userUpdate = new HashMap<>();
-                    userUpdate.put("enterTime/year", LocalDateTime.now().getYear());
-                    userUpdate.put("enterTime/dayOfYear", LocalDateTime.now().getDayOfYear());
-                    userUpdate.put("enterTime/hour", LocalDateTime.now().getHour());
-                    userUpdate.put("enterTime/minute", LocalDateTime.now().getMinute());
-                    userUpdate.put("enterTime/second", LocalDateTime.now().getSecond());
-                    userUpdate.put("parkingLotID", readValue);
-                    userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
-                    databaseReferenceCurrentUser.updateChildren(userUpdate);
 
                 }
                 @Override
@@ -70,6 +77,20 @@ public class EnterParkingActivity extends QRScan {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_enter", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
                         user.setParkingLotPrice(Integer.parseInt(parkingLot.price));
+
+                        Map<String, Object> userUpdate = new HashMap<>();
+                        userUpdate.put("enterTime/year", LocalDateTime.now().getYear());
+                        userUpdate.put("enterTime/dayOfYear", LocalDateTime.now().getDayOfYear());
+                        userUpdate.put("enterTime/hour", LocalDateTime.now().getHour());
+                        userUpdate.put("enterTime/minute", LocalDateTime.now().getMinute());
+                        userUpdate.put("enterTime/second", LocalDateTime.now().getSecond());
+                        userUpdate.put("parkingLotID", readValue);
+                        userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
+                        databaseReferenceCurrentUser.updateChildren(userUpdate);
+
+                        startActivity(new Intent(EnterParkingActivity.this, SeeAssignedParkPlaceActivity.class));
+                        currentActivity.finish();
+
                         return;
                     }
                 }
@@ -80,11 +101,5 @@ public class EnterParkingActivity extends QRScan {
 
             }
         });
-
-
-        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
-        intent.putExtra("qrResult", getQrResult().getText().toString());
-        startActivity(intent);
-        this.finish();
     }
 }

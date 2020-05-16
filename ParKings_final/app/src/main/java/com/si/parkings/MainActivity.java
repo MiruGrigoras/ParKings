@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
-                            User currentUser = new User(user.getUid());
+                            User currentUser = new User();
                             currentUser.setCash((float) 0);
                             reference.child(user.getUid()).setValue(currentUser);
 

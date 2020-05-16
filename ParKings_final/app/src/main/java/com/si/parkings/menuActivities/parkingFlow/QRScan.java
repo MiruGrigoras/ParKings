@@ -36,10 +36,6 @@ public abstract class QRScan extends AppCompatActivity{
         this.currentActivity = currentActivity;
     }
 
-    public TextView getQrResult() {
-        return qrResult;
-    }
-
     public void setQrResult(TextView qrResult) {
         this.qrResult = qrResult;
     }
@@ -72,10 +68,12 @@ public abstract class QRScan extends AppCompatActivity{
         }
     }
 
+    public abstract void setContentView();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_parking);
+        setContentView();
 
         qrScanView = findViewById(R.id.QRScanView);
         qrResult = findViewById(R.id.qrResult);
