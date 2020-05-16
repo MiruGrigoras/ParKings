@@ -38,7 +38,7 @@ public class EnterParkingActivity extends QRScan {
                     sendLiftBarrierCommand(readValue, user);
                     Map<String, Object> userUpdate = new HashMap<>();
                     userUpdate.put("enterTime/year", LocalDateTime.now().getYear());
-                    userUpdate.put("enterTime/day_of_year", LocalDateTime.now().getDayOfYear());
+                    userUpdate.put("enterTime/dayOfYear", LocalDateTime.now().getDayOfYear());
                     userUpdate.put("enterTime/hour", LocalDateTime.now().getHour());
                     userUpdate.put("enterTime/minute", LocalDateTime.now().getMinute());
                     userUpdate.put("enterTime/second", LocalDateTime.now().getSecond());
@@ -69,7 +69,7 @@ public class EnterParkingActivity extends QRScan {
                     if (parkingLot.qr_code_enter.equals(readValue)) {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_enter", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
-                        user.setParkingLotPrice(parkingLot.price);
+                        user.setParkingLotPrice(Integer.parseInt(parkingLot.price));
                         return;
                     }
                 }

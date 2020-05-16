@@ -102,7 +102,7 @@ public class ExitParkingActivity extends QRScan {
                     if (parkingLot.qr_code_exit.equals(readValue)) {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_exit", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
-                        currentUserParkingLotPrice = parkingLot.price;
+                        currentUserParkingLotPrice = Integer.parseInt(parkingLot.price);
                         return;
                     }
                 }

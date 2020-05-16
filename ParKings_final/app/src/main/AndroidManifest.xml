@@ -56,6 +56,7 @@
             android:name=".menuActivities.AmountActivity"
             android:theme="@style/AppTheme.PopUpWindow" />
         <activity android:name=".menuActivities.parkingFlow.EnterParkingActivity" />
+        <activity android:name=".menuActivities.parkingFlow.ExitParkingActivity" />
     </application>
 
 </manifest>

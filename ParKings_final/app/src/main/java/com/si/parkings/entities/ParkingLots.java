@@ -10,5 +10,5 @@ public class ParkingLots {
     public Boolean needs_to_lift_enter;
     public Boolean needs_to_lift_exit;
     public ArrayList<Spot> spots;
-    public int price;
+    public String price;
 }

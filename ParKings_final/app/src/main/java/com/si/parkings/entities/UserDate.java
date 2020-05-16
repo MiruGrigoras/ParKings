@@ -2,7 +2,7 @@ package com.si.parkings.entities;
 
 public class UserDate {
     private int year;
-    private int day_of_year;
+    private int dayOfYear;
     private int hour;
     private int minute;
     private int second;
@@ -15,11 +15,11 @@ public class UserDate {
     }
 
     public int getDayOfYear() {
-        return day_of_year;
+        return dayOfYear;
     }
 
     public void setDayOfYear(int dayOfYear) {
-        this.day_of_year = dayOfYear;
+        this.dayOfYear = dayOfYear;
     }
 
     public int getHour() {

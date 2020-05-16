@@ -1,6 +1,7 @@
 package com.si.parkings;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import java.time.LocalDateTime;
 
 public class MenuActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
+    private Activity currentActivity;
 
     DialogInterface.OnClickListener dialogClickListener = (dialog, variant) -> {
         switch (variant){
@@ -116,7 +118,11 @@ public class MenuActivity extends AppCompatActivity {
                     enterParkingButton.setVisibility(View.VISIBLE);
                     exitParkingButton.setVisibility(View.GONE);
                     enterParkingButton.setOnClickListener(
-                            v -> startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class)));
+                            v -> {
+                                startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
+                                currentActivity.finish();
+                            });
+
                 }
                 else{
                     exitParkingButton.setEnabled(true);
@@ -131,8 +137,12 @@ public class MenuActivity extends AppCompatActivity {
                         currentDate.setMinute(LocalDateTime.now().getMinute());
                         currentDate.setSecond(LocalDateTime.now().getSecond());
                         user.setAmountToPay(user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice()));
-                        if(user.getAmountToPay() < user.getCash())
-                            startActivity(new Intent(MenuActivity.this, ExitParkingActivity.class));
+                        if(user.getAmountToPay() < user.getCash()) {
+                            Intent intent = new Intent(MenuActivity.this, ExitParkingActivity.class);
+                            intent.putExtra("userCash", user.getCash());
+                            intent.putExtra("userAmountToPay", user.getAmountToPay());
+                            startActivity(intent);
+                        }
                         else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay", Toast.LENGTH_SHORT);
                             toast.show();
@@ -157,7 +167,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        currentActivity = this;
         this.setupUI();
     }
 }
