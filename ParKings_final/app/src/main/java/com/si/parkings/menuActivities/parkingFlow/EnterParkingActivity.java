@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.R;
+import com.si.parkings.entities.User;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -33,6 +34,8 @@ public class EnterParkingActivity extends QRScan {
             databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    sendLiftBarrierCommand(readValue, user);
                     Map<String, Object> userUpdate = new HashMap<>();
                     userUpdate.put("enterTime/year", LocalDateTime.now().getYear());
                     userUpdate.put("enterTime/day_of_year", LocalDateTime.now().getDayOfYear());
@@ -40,8 +43,9 @@ public class EnterParkingActivity extends QRScan {
                     userUpdate.put("enterTime/minute", LocalDateTime.now().getMinute());
                     userUpdate.put("enterTime/second", LocalDateTime.now().getSecond());
                     userUpdate.put("parkingLotID", readValue);
+                    userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
                     databaseReferenceCurrentUser.updateChildren(userUpdate);
-                    sendLiftBarrierCommand(readValue);
+
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -54,7 +58,7 @@ public class EnterParkingActivity extends QRScan {
         }
     }
 
-    private void sendLiftBarrierCommand(final String readValue) {
+    private void sendLiftBarrierCommand(final String readValue, User user) {
         final DatabaseReference databaseReferenceParkingLots = FirebaseDatabase.getInstance().getReference("parking_lots");
         databaseReferenceParkingLots.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -62,9 +66,10 @@ public class EnterParkingActivity extends QRScan {
                 Map<String, Object> parkingUpdate = new HashMap<>();
                 for (DataSnapshot parkingLotSnapshot: dataSnapshot.getChildren()) {
                     ParkingLots parkingLot = parkingLotSnapshot.getValue(ParkingLots.class);
-                    if (parkingLot.qr_code.equals(readValue)) {
+                    if (parkingLot.qr_code_enter.equals(readValue)) {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_enter", true);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
+                        user.setParkingLotPrice(parkingLot.price);
                         return;
                     }
                 }

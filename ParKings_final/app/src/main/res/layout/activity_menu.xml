@@ -68,6 +68,18 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
+        android:id="@+id/exit_parking_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/signoutButton"
+        android:padding="10dp"
+        android:text="Enter"
+        app:layout_constraintTop_toBottomOf="@id/parkText"
+        app:layout_constraintBottom_toTopOf="@id/enter_amount_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
         android:id="@+id/enter_amount_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

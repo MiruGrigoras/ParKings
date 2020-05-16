@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,11 +21,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.si.parkings.entities.User;
+import com.si.parkings.entities.UserDate;
 import com.si.parkings.menuActivities.AmountActivity;
 import com.si.parkings.menuActivities.ParkingPlacesActivity;
 import com.si.parkings.menuActivities.parkingFlow.EnterParkingActivity;
+import com.si.parkings.menuActivities.parkingFlow.ExitParkingActivity;
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 
 public class MenuActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
@@ -89,19 +94,57 @@ public class MenuActivity extends AppCompatActivity {
         addAmountButton.setOnClickListener(
                 v -> startActivity(new Intent(MenuActivity.this, AmountActivity.class)));
     }
+
     private void setupUI(){
         setText();
         searchParking();
         addAmount();
-        enterParking();
+        enterExitParking();
         signOut();
     }
 
-    private void enterParking() {
+    private void enterExitParking() {
         Button enterParkingButton = findViewById(R.id.enter_parking_button);
-        enterParkingButton.setEnabled(true);
-        enterParkingButton.setOnClickListener(
-                v -> startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class)));
+        Button exitParkingButton = findViewById(R.id.exit_parking_button);
+        DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+        databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if(user.getParkingLotID() == null){
+                    enterParkingButton.setEnabled(true);
+                    enterParkingButton.setVisibility(View.VISIBLE);
+                    exitParkingButton.setVisibility(View.GONE);
+                    enterParkingButton.setOnClickListener(
+                            v -> startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class)));
+                }
+                else{
+                    UserDate enterDate = user.getEnterTime();
+                    UserDate currentDate = new UserDate();
+                    currentDate.setDayOfYear(LocalDateTime.now().getDayOfYear());
+                    currentDate.setYear(LocalDateTime.now().getYear());
+                    currentDate.setHour(LocalDateTime.now().getHour());
+                    currentDate.setMinute(LocalDateTime.now().getMinute());
+                    currentDate.setSecond(LocalDateTime.now().getSecond());
+                    user.setAmountToPay(user.calculateOwedSum(enterDate, currentDate, user.getParkingLotPrice()));
+                    exitParkingButton.setEnabled(true);
+                    enterParkingButton.setVisibility(View.GONE);
+                    exitParkingButton.setVisibility(View.VISIBLE);
+                    exitParkingButton.setOnClickListener(v -> {
+                        if(user.getAmountToPay() < user.getCash())
+                            startActivity(new Intent(MenuActivity.this, ExitParkingActivity.class));
+                        else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void searchParking() {
