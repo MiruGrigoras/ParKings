@@ -19,8 +19,10 @@ import com.si.parkings.entities.User;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class EnterParkingActivity extends QRScan {
+    private Random random = new Random();
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
 
@@ -68,23 +70,22 @@ public class EnterParkingActivity extends QRScan {
                     ParkingLots parkingLot = parkingLotSnapshot.getValue(ParkingLots.class);
                     if (parkingLot.qr_code_enter.equals(readValue)) {
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_enter", true);
+                        int index = random.nextInt(parkingLot.spots.size());
+                        while(parkingLot.spots.get(index).occupied)
+                            index = random.nextInt(parkingLot.spots.size());
+                        String spot_link = parkingLot.spots.get(index).image_url;
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
                         user.setParkingLotPrice(Integer.parseInt(parkingLot.price));
+                        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
+                        intent.putExtra("image_url", spot_link);
+                        startActivity(intent);
                         return;
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
-
-        Intent intent = new Intent(EnterParkingActivity.this, ParkPlaceActivity.class);
-        intent.putExtra("qrResult", getQrResult().getText().toString());
-        startActivity(intent);
-        this.finish();
     }
 }
