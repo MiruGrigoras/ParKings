@@ -26,15 +26,7 @@ public abstract class QRScan extends AppCompatActivity{
     private final int RequestCameraPermissionID = 1001;
     private SurfaceView qrScanView;
     private CameraSource cameraSource;
-    private AppCompatActivity currentActivity;
-
-    public AppCompatActivity getCurrentActivity() {
-        return currentActivity;
-    }
-
-    public void setCurrentActivity(AppCompatActivity currentActivity) {
-        this.currentActivity = currentActivity;
-    }
+    AppCompatActivity currentActivity;
 
     public void setQrResult(TextView qrResult) {
         this.qrResult = qrResult;
@@ -118,6 +110,7 @@ public abstract class QRScan extends AppCompatActivity{
         });
 
         qrDetector.setProcessor(new Detector.Processor<Barcode>() {
+
             @Override
             public void release() { }
 

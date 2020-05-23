@@ -4,23 +4,22 @@ Enter the parking - ParKings - Iulius Mall
 Exit the parking - ParKings - Iulius Mall
 Enter the parking - ParKings - Shopping City
 Exit the parking - ParKings - Shopping City
-ParKings - Paris Street - Spot no.1
-ParKings - Paris Street - Spot no.2
-ParKings - Paris Street - Spot no.3
-ParKings - Paris Street - Spot no.4
-ParKings - Paris Street - Spot no.5
-ParKings - Iulius Mall - Spot no.1
-ParKings - Iulius Mall - Spot no.2
-ParKings - Iulius Mall - Spot no.3
-ParKings - Iulius Mall - Spot no.4
-ParKings - Iulius Mall - Spot no.5
-ParKings - Iulius Mall - Spot no.6
-ParKings - Iulius Mall - Spot no.7
-ParKings - Iulius Mall - Spot no.8
-ParKings - Shopping City - Spot no.1
-ParKings - Shopping City - Spot no.2
-ParKings - Shopping City - Spot no.3
-ParKings - Shopping City - Spot no.4
-ParKings - Shopping City - Spot no.5
+ParKings - i1
+ParKings - i2
+ParKings - i3
+ParKings - i4
+ParKings - i5
+ParKings - i6
+ParKings - i7
+ParKings - p1
+ParKings - p2
+ParKings - p3
+ParKings - p4
+ParKings - p5
+ParKings - s1
+ParKings - s2
+ParKings - s3
+ParKings - s4
+ParKings - s5
 
 

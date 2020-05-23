@@ -4,50 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/citytraffic"
-    tools:context=".menuActivities.parkingFlow.SeeAssignedParkPlaceActivity">
+    tools:context=".menuActivities.parkingFlow.ParkPlaceActivity">
 
     <TextView
-        android:id="@+id/parkSpotText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:baselineAligned="false"
-        android:ems="10"
-        android:gravity="center"
-        android:text="Your Assigned Place"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/parkSpot"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:id="@+id/qrResult"
+        app:layout_constraintBottom_toBottomOf="@id/QRScanView"/>
 
-
-    <ImageView
-        android:id="@+id/parkSpot"
+    <SurfaceView
+        android:id="@+id/QRScanView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parkSpotText"
-        app:srcCompat="?attr/selectableItemBackgroundBorderless" />
-
-    <Button
-        android:id="@+id/scan_place_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/signoutButton"
-        android:padding="10dp"
-        android:text="Scan place code"
-        app:layout_constraintTop_toBottomOf="@id/parkSpot"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

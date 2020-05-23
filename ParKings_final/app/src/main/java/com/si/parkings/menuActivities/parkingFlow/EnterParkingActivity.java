@@ -1,6 +1,5 @@
 package com.si.parkings.menuActivities.parkingFlow;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -15,8 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.R;
+import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.entities.User;
 
 import java.time.LocalDateTime;
@@ -28,12 +27,6 @@ public class EnterParkingActivity extends QRScan {
     private Random random = new Random();
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
-    Activity currentActivity;
-    private int currentUserParkingLotPrice;
-
-    public EnterParkingActivity(){
-        setCurrentActivity(this);
-    }
 
     @Override
     public void setContentView() {
@@ -82,6 +75,7 @@ public class EnterParkingActivity extends QRScan {
                             index = random.nextInt(parkingLot.spots.size());
                         String spot_link = parkingLot.spots.get(index).image_url;
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
+
                         user.setParkingLotPrice(Integer.parseInt(parkingLot.price));
 
                         Map<String, Object> userUpdate = new HashMap<>();
@@ -93,7 +87,6 @@ public class EnterParkingActivity extends QRScan {
                         userUpdate.put("parkingLotID", readValue);
                         userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
                         databaseReferenceCurrentUser.updateChildren(userUpdate);
-
 
 
                         Intent intent = new Intent(EnterParkingActivity.this, SeeAssignedParkPlaceActivity.class);

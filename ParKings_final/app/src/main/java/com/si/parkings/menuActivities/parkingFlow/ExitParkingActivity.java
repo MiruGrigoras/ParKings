@@ -1,10 +1,11 @@
 package com.si.parkings.menuActivities.parkingFlow;
 
-import androidx.annotation.NonNull;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,9 +18,7 @@ import com.si.parkings.MenuActivity;
 import com.si.parkings.R;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.entities.User;
-import com.si.parkings.entities.UserDate;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,11 +26,11 @@ public class ExitParkingActivity extends QRScan {
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
 
-
-    public ExitParkingActivity(){
-        setCurrentActivity(this);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        currentActivity = this;
     }
-
 
     @Override
     public void setContentView() {
@@ -105,6 +104,6 @@ public class ExitParkingActivity extends QRScan {
         });
 
         startActivity(new Intent(ExitParkingActivity.this, MenuActivity.class));
-        this.finish();
+        currentActivity.finish();
     }
 }
