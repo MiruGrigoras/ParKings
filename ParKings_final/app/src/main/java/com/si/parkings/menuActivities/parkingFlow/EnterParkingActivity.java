@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.si.parkings.MenuActivity;
 import com.si.parkings.R;
 import com.si.parkings.entities.ParkingLots;
 import com.si.parkings.entities.User;
@@ -57,6 +58,8 @@ public class EnterParkingActivity extends QRScan {
         else{
             Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
             toast.show();
+            startActivity(new Intent(EnterParkingActivity.this, MenuActivity.class));
+            currentActivity.finish();
         }
     }
 
@@ -86,6 +89,7 @@ public class EnterParkingActivity extends QRScan {
                         userUpdate.put("enterTime/second", LocalDateTime.now().getSecond());
                         userUpdate.put("parkingLotID", readValue);
                         userUpdate.put("parkingLotPrice", user.getParkingLotPrice());
+                        userUpdate.put("parkingSpotID", parkingLot.spots.get(index).spot_id);
                         databaseReferenceCurrentUser.updateChildren(userUpdate);
 
 

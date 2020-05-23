@@ -51,29 +51,17 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/amountText"
-        app:layout_constraintBottom_toTopOf="@id/enter_parking_button"
+        app:layout_constraintBottom_toTopOf="@id/enter_exit_parking_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
-        android:id="@+id/enter_parking_button"
+        android:id="@+id/enter_exit_parking_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/signoutButton"
         android:padding="10dp"
         android:text="Enter parking"
-        app:layout_constraintTop_toBottomOf="@id/parkText"
-        app:layout_constraintBottom_toTopOf="@id/enter_amount_button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/exit_parking_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/signoutButton"
-        android:padding="10dp"
-        android:text="Exit parking"
         app:layout_constraintTop_toBottomOf="@id/parkText"
         app:layout_constraintBottom_toTopOf="@id/enter_amount_button"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -86,7 +74,7 @@
         android:background="@color/signoutButton"
         android:padding="10dp"
         android:text="Add amount"
-        app:layout_constraintTop_toBottomOf="@id/enter_parking_button"
+        app:layout_constraintTop_toBottomOf="@id/enter_exit_parking_button"
         app:layout_constraintBottom_toTopOf="@id/search_parking_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

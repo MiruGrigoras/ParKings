@@ -2,6 +2,7 @@ package com.si.parkings.menuActivities.parkingFlow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +40,12 @@ public class ParkPlaceActivity extends QRScan {
         if(readValue.contains(assignedSpot)){
             setSpotToOccupied(assignedSpot);
         }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
+            toast.show();
+            startActivity(new Intent(ParkPlaceActivity.this, SeeAssignedParkPlaceActivity.class));
+            currentActivity.finish();
+        }
     }
 
     private void setSpotToOccupied(String assignedSpot) {
@@ -69,6 +76,8 @@ public class ParkPlaceActivity extends QRScan {
 
             }
         });
+
+
         startActivity(new Intent(ParkPlaceActivity.this, MenuActivity.class));
         currentActivity.finish();
     }

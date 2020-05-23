@@ -25,6 +25,7 @@ import java.util.Map;
 public class ExitParkingActivity extends QRScan {
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+    private String parkingSpotIDToFree;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class ExitParkingActivity extends QRScan {
         else{
             Toast toast = Toast.makeText(getApplicationContext(), R.string.incorrectQRCode, Toast.LENGTH_SHORT);
             toast.show();
+            startActivity(new Intent(ExitParkingActivity.this, MenuActivity.class));
+            currentActivity.finish();
         }
     }
 
@@ -55,6 +58,7 @@ public class ExitParkingActivity extends QRScan {
                 Intent intent = getIntent();
                 Float userCash = intent.getFloatExtra("userCash", 0);
                 Float userAmountToPay = intent.getFloatExtra("userAmountToPay", 0);
+                parkingSpotIDToFree = intent.getStringExtra("userParkingSpotID");
 
                 User user = new User();
                 user.setAmountToPay(userAmountToPay);
@@ -90,7 +94,9 @@ public class ExitParkingActivity extends QRScan {
                 for (DataSnapshot parkingLotSnapshot: dataSnapshot.getChildren()) {
                     ParkingLots parkingLot = parkingLotSnapshot.getValue(ParkingLots.class);
                     if (parkingLot.qr_code_exit.equals(readValue)) {
+                        int id = Integer.parseInt(parkingSpotIDToFree.substring(1))-1;
                         parkingUpdate.put(parkingLotSnapshot.getKey()+ "/needs_to_lift_exit", true);
+                        parkingUpdate.put(parkingLotSnapshot.getKey()+ "/spots/" + id + "/occupied", false);
                         databaseReferenceParkingLots.updateChildren(parkingUpdate);
                         return;
                     }

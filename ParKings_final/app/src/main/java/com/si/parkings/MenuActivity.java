@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +57,7 @@ public class MenuActivity extends AppCompatActivity {
                     .setNegativeButton("No", dialogClickListener).show();
         });
     }
+
     @SuppressLint("SetTextI18n")
     private void setText() {
         TextView helloText = findViewById(R.id.helloText);
@@ -75,9 +76,7 @@ public class MenuActivity extends AppCompatActivity {
                 String parkingSpot = user.getParkingSpotID();
                 if (parkingLot != null) {
                     parkingLot = (String)Array.get(parkingLot.split("-", 3),2);
-                    if (parkingSpot != null)
-                        parkingSpot = (String)Array.get(parkingSpot.split("-", 3),2);
-                    else
+                    if (parkingSpot == null)
                         parkingSpot = "";
                     parkText.setText("You parked in: " + parkingLot + "," + parkingSpot);
                 }
@@ -106,18 +105,15 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void enterExitParking() {
-        Button enterParkingButton = findViewById(R.id.enter_parking_button);
-        Button exitParkingButton = findViewById(R.id.exit_parking_button);
+        Button parkingButton = findViewById(R.id.enter_exit_parking_button);
         DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
         databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if(user.getParkingLotID() == null){
-                    enterParkingButton.setEnabled(true);
-                    enterParkingButton.setVisibility(View.VISIBLE);
-                    exitParkingButton.setVisibility(View.GONE);
-                    enterParkingButton.setOnClickListener(
+                    parkingButton.setText("Enter parking");
+                    parkingButton.setOnClickListener(
                             v -> {
                                 startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
                                 currentActivity.finish(); //should be deleted??
@@ -125,10 +121,8 @@ public class MenuActivity extends AppCompatActivity {
 
                 }
                 else{
-                    exitParkingButton.setEnabled(true);
-                    enterParkingButton.setVisibility(View.GONE);
-                    exitParkingButton.setVisibility(View.VISIBLE);
-                    exitParkingButton.setOnClickListener(v -> {
+                    parkingButton.setText("Exit parking");
+                    parkingButton.setOnClickListener(v -> {
                         UserDate enterDate = user.getEnterTime();
                         UserDate currentDate = new UserDate();
                         currentDate.setDayOfYear(LocalDateTime.now().getDayOfYear());
@@ -142,6 +136,7 @@ public class MenuActivity extends AppCompatActivity {
                             Intent intent = new Intent(MenuActivity.this, ExitParkingActivity.class);
                             intent.putExtra("userCash", user.getCash());
                             intent.putExtra("userAmountToPay", user.getAmountToPay());
+                            intent.putExtra("userParkingSpotID", user.getParkingSpotID());
                             startActivity(intent);
                             currentActivity.finish();  //should be deleted??
                         }
