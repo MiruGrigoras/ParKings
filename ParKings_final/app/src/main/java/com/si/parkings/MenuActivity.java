@@ -34,6 +34,7 @@ import java.time.LocalDateTime;
 public class MenuActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Activity currentActivity;
+    private Button parkingButton;
 
     DialogInterface.OnClickListener dialogClickListener = (dialog, variant) -> {
         switch (variant){
@@ -105,7 +106,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void enterExitParking() {
-        Button parkingButton = findViewById(R.id.enter_exit_parking_button);
+        parkingButton = findViewById(R.id.enter_exit_parking_button);
         DatabaseReference databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
         databaseReferenceCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
