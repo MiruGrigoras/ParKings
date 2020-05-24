@@ -117,7 +117,7 @@ public class MenuActivity extends AppCompatActivity {
                     parkingButton.setOnClickListener(
                             v -> {
                                 startActivity(new Intent(MenuActivity.this, EnterParkingActivity.class));
-                                currentActivity.finish(); //should be deleted??
+                                currentActivity.finish();
                             });
 
                 }
@@ -139,7 +139,7 @@ public class MenuActivity extends AppCompatActivity {
                             intent.putExtra("userAmountToPay", user.getAmountToPay());
                             intent.putExtra("userParkingSpotID", user.getParkingSpotID());
                             startActivity(intent);
-                            currentActivity.finish();  //should be deleted??
+                            currentActivity.finish();
                         }
                         else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Not enough money to pay!", Toast.LENGTH_SHORT);
